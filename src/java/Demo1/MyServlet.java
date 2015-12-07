@@ -135,11 +135,13 @@ public class MyServlet extends HttpServlet {
     private static void addDoc(IndexWriter w, String Name, String Price, String Area, String Purpose) throws IOException {
         Document doc = new Document();
         // A text field will be tokenized
-        doc.add(new TextField("name", Name, Field.Store.YES));
+        doc.add(new StringField("name", Name, Field.Store.YES));
         // We use a string field for isbn because we don\'t want it tokenized
         doc.add(new StringField("price", Price, Field.Store.YES));
         doc.add(new StringField("area", Area, Field.Store.YES));
         doc.add(new StringField("purpose", Purpose, Field.Store.YES));
+        String Searching = Name +" "+ Price+ " "+ Area+" "+Purpose;
+        doc.add(new TextField("Searching", Searching, Field.Store.NO));
         w.addDocument(doc);
     }
 
@@ -151,7 +153,7 @@ public class MyServlet extends HttpServlet {
             log.addHistory(querystr);
 
             //	The \"title\" arg specifies the default field to use when no field is explicitly specified in the query
-            Query q = new QueryParser("name", analyzer).parse(querystr);
+            Query q = new QueryParser("Searching", analyzer).parse(querystr);
 
             // Searching code
             int hitsPerPage = 10;
