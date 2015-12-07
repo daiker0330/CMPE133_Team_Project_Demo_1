@@ -13,10 +13,10 @@ import java.util.ArrayList;
  * @author yunfan
  */
 public class LandClause extends AnyRule{
-    private static int maxCourse = 4;
+    private static int maxLand = 4;
     
     public boolean check(ArrayList<Object> arr){
-        if(arr.size()>=LandClause.maxCourse){
+        if(arr.size()>=LandClause.maxLand){
             return false;
         }
         else{

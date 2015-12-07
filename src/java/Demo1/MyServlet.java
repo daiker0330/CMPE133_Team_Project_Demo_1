@@ -73,12 +73,12 @@ public class MyServlet extends HttpServlet {
             index = new RAMDirectory();
             config = new IndexWriterConfig(analyzer);
             w = new IndexWriter(index, config);
-            addDoc(w, " Software Engineering 2", "CMPE 133", "Mon.", "Computer Engineering");
-            addDoc(w, " Software Engineering 1", "CMPE 131", "Mon.", "Computer Engineering");
-            addDoc(w, " Object Oriented Design", "CS 151", "Mon.", "Computer Science");
-            addDoc(w, " Advance Data Structures with Java ", "CS 146:", "Mon.", "Computer Science");
-            addDoc(w, " System Security with Java", "CS 166:", "Mon.", "Computer Science");
-            addDoc(w, "Liner math", "ME 123", "Mon.", "Math");
+            addDoc(w, " San Mateo Warhouse", "500,000", "San Mateo", "Business");
+            addDoc(w, " Growing Land", "1,000,000", "Fresno.", "Business");
+            addDoc(w, "Apartment complex", "1,356,999", "San Jose.", "Economy");
+            addDoc(w, " SuperMarkett ", "200,000", "Milpitas.", "Business");
+            addDoc(w, " White House", "2,000,000:", "Washington.", "Economy");
+            addDoc(w, "Desert land ", "200,000", "Santa Cruz.", "Personal");
             w.close();
             log = new searchHistory();
             for(int i=1;i<=10;i++){
@@ -109,19 +109,19 @@ public class MyServlet extends HttpServlet {
                 gotoSearch(out, request, response);
             } else if (request.getParameter("func").equals("login")) {
                 gotoLogin(out, request, response);
-            } else if (request.getParameter("func").equals("enroll")) {
+            } else if (request.getParameter("func").equals("Mortgage")) {
                 gotoEnroll(out, request, response);
-            } else if (request.getParameter("func").equals("addCourse")) {
+            } else if (request.getParameter("func").equals("addLand")) {
                 gotoAddCourse(out, request, response);
             } else if (request.getParameter("func").equals("log")) {
                 String msg = log.printHistory();
                 String title = "Log";
                 gotoMsg(out, request, response, title, msg);
             } else if (request.getParameter("func").equals("clear")) {
-                currentStudent.getEnroll().getArr().clear();
-                currentStudent.getSchedule().getArr().clear();
-                String msg = "Clear Schedule Success";
-                String title = "Clear Schedule";
+                currentStudent.getMortgage().getArr().clear();
+                currentStudent.getProperty().getArr().clear();
+                String msg = "Clear land searched for";
+                String title = "No lands";
                 gotoMsg(out, request, response, title, msg);
             }
             else {
@@ -132,14 +132,14 @@ public class MyServlet extends HttpServlet {
         }
     }
 
-    private static void addDoc(IndexWriter w, String Class, String number, String time, String department) throws IOException {
+    private static void addDoc(IndexWriter w, String Name, String Price, String Area, String Purpose) throws IOException {
         Document doc = new Document();
         // A text field will be tokenized
-        doc.add(new TextField("Classes", Class, Field.Store.YES));
+        doc.add(new TextField("name", Name, Field.Store.YES));
         // We use a string field for isbn because we don\'t want it tokenized
-        doc.add(new StringField("Number", number, Field.Store.YES));
-        doc.add(new StringField("Time", time, Field.Store.YES));
-        doc.add(new StringField("Department", department, Field.Store.YES));
+        doc.add(new StringField("price", Price, Field.Store.YES));
+        doc.add(new StringField("area", Area, Field.Store.YES));
+        doc.add(new StringField("purpose", Purpose, Field.Store.YES));
         w.addDocument(doc);
     }
 
@@ -151,7 +151,7 @@ public class MyServlet extends HttpServlet {
             log.addHistory(querystr);
 
             //	The \"title\" arg specifies the default field to use when no field is explicitly specified in the query
-            Query q = new QueryParser("Classes", analyzer).parse(querystr);
+            Query q = new QueryParser("name", analyzer).parse(querystr);
 
             // Searching code
             int hitsPerPage = 10;
@@ -167,11 +167,11 @@ public class MyServlet extends HttpServlet {
             for (int i = 0; i < hits.length; ++i) {
                 int docId = hits[i].doc;
                 Document d = searcher.doc(docId);
-                Land course = new Land(d.get("Number"), d.get("Classes"), d.get("Time"), d.get("Department"));
+                Land course = new Land(d.get("name"), d.get("price"), d.get("area"), d.get("purpose"));
                 //out.println((i + 1) + ". " +  d.get("Number")+ d.get("Classes") );
                 courseList.add(course);
             }
-            request.setAttribute("course", courseList);
+            request.setAttribute("Lands", courseList);
             RequestDispatcher de = request.getRequestDispatcher("/table.jsp");
             de.forward(request, response);
 
@@ -234,37 +234,37 @@ public class MyServlet extends HttpServlet {
         if (currentStudent != null) {
             for (int i = 0; i < courseList.size(); i++) {
                 Land c = (Land) courseList.get(i);
-                Mortgage enroll = currentStudent.getEnroll();
+                Mortgage enroll = currentStudent.getMortgage();
                 ArrayList<Object> arr = enroll.getArr();
                 if (c.getName().equals(request.getParameter("name"))) {
-                    if (currentStudent.getRule().check(arr)) {
-                        currentStudent.getEnroll().addCourse(c);
-                        currentStudent.getSchedule().addCourse(c);
-                        String msg = "You have enrolled in " + request.getParameter("id") + ": " + request.getParameter("name");
-                        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
-                        String title = "Enroll Success";
+                    if (currentStudent.getClause().check(arr)) {
+                        currentStudent.getMortgage().addCourse(c);
+                        currentStudent.getProperty().addLand(c);
+                        String msg = "You choose this land " + request.getParameter("area") + ": " + request.getParameter("name");
+                        msg+= "<hr>Choose Land<br>" + currentStudent.getProperty().print();
+                        String title = "Land choice success";
                         gotoMsg(out, request, response, title, msg);
                     } else {
-                        String msg = "You cannot enroll in " + request.getParameter("id") + ": "
-                                + request.getParameter("name") + "<br>Since you have already enrolled in 4 courses";
-                        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
-                        String title = "Enroll Failed";
+                        String msg = "You cannot purchase this land " + request.getParameter("area") + ": "
+                                + request.getParameter("name") + "<br>Since you have 4 lands";
+                        msg+= "<hr>Choose Land<br>" + currentStudent.getProperty().print();
+                        String title = "land registration failed";
                         gotoMsg(out, request, response, title, msg);
                     }
                 }
             }
         }
-        String msg = "You cannot enroll in " + request.getParameter("id") + ": " + request.getParameter("name");
-        String title = "Enroll Failed";
-        msg+= "<hr>Choose Course<br>" + currentStudent.getSchedule().print();
+        String msg = "You cannot choose this land" + request.getParameter("area") + ": " + request.getParameter("name");
+        String title = "Land failed Failed";
+        msg+= "<hr>Choose Land<br>" + currentStudent.getProperty().print();
         gotoMsg(out, request, response, title, msg);
     }
 
     private void gotoAddCourse(PrintWriter out, HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
-        String id = request.getParameter("id");
-        String department = request.getParameter("department");
-        String time = request.getParameter("time");
+        String id = request.getParameter("area");
+        String department = request.getParameter("purpose");
+        String time = request.getParameter("price");
         try {
             IndexWriterConfig newConfig = new IndexWriterConfig(analyzer);
             w = new IndexWriter(index, newConfig);
@@ -274,8 +274,8 @@ public class MyServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        String msg = "Create course success";
-        String title = "Create course success";
+        String msg = "Create land success";
+        String title = "Create land success";
         gotoMsg(out, request, response, title, msg);
     }
 

@@ -11,14 +11,14 @@ package Demo1;
  * @author yunfan
  */
 public class AnyType {
-    private String name;
+    private String landPurpose;
     
-    public String getName() {
-        return name;
+    public String getLandPurpose() {
+        return landPurpose;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLandPurpose(String landPurpose) {
+        this.landPurpose = landPurpose;
     }
     
 }

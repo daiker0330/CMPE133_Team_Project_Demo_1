@@ -13,24 +13,24 @@ public class Buyer extends AnyParty {
 
     private final int MaxUnits = 15;
     private int StudentUnits;
-    private Mortgage enroll = new Mortgage();
-    private LandClause rule = new LandClause();
-    private Property schedule = new Property();
+    private Mortgage Mortgage = new Mortgage();
+    private LandClause clause = new LandClause();
+    private Property property = new Property();
 
-    public Property getSchedule() {
-        return schedule;
+    public Property getProperty() {
+        return property;
     }
 
     public String getPsd() {
         return super.getPassword();
     }
 
-    public Mortgage getEnroll() {
-        return enroll;
+    public Mortgage getMortgage() {
+        return Mortgage;
     }
 
-    public LandClause getRule() {
-        return rule;
+    public LandClause getClause() {
+        return clause;
     }
 
     public int getMaxUnits() {

@@ -12,6 +12,6 @@ package Demo1;
  */
 public class Purpose extends AnyType{
     public Purpose(String name){
-        this.setName(name);
+        this.setLandPurpose(name);
     }
 }

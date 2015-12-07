@@ -1,10 +1,10 @@
 <%@page import="java.util.List"%>
-<%@page import="Lab6.Course"%>
+<%@page import="Demo1.Land"%>
 <html class="no-js">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Courses</title>
+        <title>Lands</title>
         <meta name="description" content="table">
         <meta name="keywords" content="table">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -33,36 +33,36 @@
                             <table class="am-table am-table-striped am-table-hover table-main">
                                 <thead>
                                     <tr>
-                                        <th class="table-id">ID</th>
+                                        <th class="table-id">Price</th>
                                         <th class="table-title">Name</th>
-                                        <th class="table-type">Department</th>
-                                        <th class="table-type">Time</th>
+                                        <th class="table-type">Purpose</th>
+                                        <th class="table-type">Area</th>
                                         <th class="table-set">Operation</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% List courses = null;
+                                    <% List Land = null;
 
-                                        courses = (List) request.getAttribute("course");
-                                        if (courses != null) {
-                                            for (int i = 0; i < courses.size(); i++) {
-                                                Course c = (Course) courses.get(i);
+                                        Land = (List) request.getAttribute("Lands");
+                                        if (Land != null) {
+                                            for (int i = 0; i < Land.size(); i++) {
+                                                Land c = (Land) Land.get(i);
                                     %>
                                     <tr>
-                                        <td><%=c.getNumber()%></td>
+                                        <td><%=c.getPrice()%></td>
                                         <td><a href="#"><%=c.getName()%></a></td>
-                                        <td><%=c.getDep()%></td>
-                                        <td><%=c.getTime()%></td>
+                                        <td><%=c.getPurpose()%></td>
+                                        <td><%=c.getArea()%></td>
                                         <td>
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
                                                     <form action="MyServlet" method="get">
-                                                        <input type="hidden" name="func" value="enroll">
-                                                        <input type="hidden" name="id" value="<%=c.getNumber()%>">
+                                                        <input type="hidden" name="func" value="Mortgage">
+                                                        <input type="hidden" name="Price" value="<%=c.getPrice()%>">
                                                         <input type="hidden" name="name" value="<%=c.getName()%>">
                                                         <input type="hidden" name="description" value="<%=c.toString()%>">
-                                                        <input type="submit" name="" value="enroll">
-                                                    </form>
+                                                        <input type="submit" name="submit" value="choose">
+                                            `        </form>
                                                 </div>
                                             </div>
                                         </td>

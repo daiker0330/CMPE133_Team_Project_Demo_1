@@ -10,8 +10,8 @@ package Demo1;
  *
  * @author yunfan
  */
-public class Property extends AnyForm{
-    public void addCourse(Land c){
+public class Property extends AnyOutcome{
+    public void addLand(Land c){
         this.getArr().add(c);
     }
     
@@ -19,7 +19,7 @@ public class Property extends AnyForm{
         String msg = new String();
         for(int i=0;i<this.getArr().size();i++){
             Land c = (Land)this.getArr().get(i);
-            msg+=c.getId()+"-"+c.getName()+"<br>";
+            msg+=c.getPrice()+"-"+c.getName()+"<br>";
         }
         return msg;
     }

@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 /**
  *
- * @author yehiaqtaish
+ * @author yunfan
  */
-public class AnyForm {
+public class AnyMechanism {
+
     ArrayList<Object> arr = new ArrayList<Object>();
 
     public ArrayList<Object> getArr() {
@@ -21,4 +22,5 @@ public class AnyForm {
     public void setArr(ArrayList<Object> arr) {
         this.arr = arr;
     }
+
 }

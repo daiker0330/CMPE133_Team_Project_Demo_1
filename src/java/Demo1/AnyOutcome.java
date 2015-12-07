@@ -9,10 +9,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author yunfan
+ * @author yehiaqtaish
  */
-public class AnyImpact {
-
+public class AnyOutcome {
     ArrayList<Object> arr = new ArrayList<Object>();
 
     public ArrayList<Object> getArr() {
@@ -22,5 +21,4 @@ public class AnyImpact {
     public void setArr(ArrayList<Object> arr) {
         this.arr = arr;
     }
-
 }

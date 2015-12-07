@@ -10,7 +10,7 @@ package Demo1;
  *
  * @author yunfan
  */
-public class Mortgage extends AnyImpact {
+public class Mortgage extends AnyMechanism {
 
     public void addCourse(Land c){
         this.getArr().add(c);

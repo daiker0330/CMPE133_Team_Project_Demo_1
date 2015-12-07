@@ -7,14 +7,16 @@ package Demo1;
 
 public class Land extends AnyEntity {
 
-    private String time;
-    private String department;
+    private String name;
+    private String area;
+    private String purpose;
+    private String price;
     
-    public Land(String id,String name,String time,String department){
-        this.setId(id);
+    public Land(String name,String price,String area,String purpose){
+        this.area=area;
         this.setName(name);
-        this.department=department;
-        this.time = time;
+        this.purpose=purpose;
+        this.price = price;
     }
 
     public String getName() {
@@ -22,17 +24,18 @@ public class Land extends AnyEntity {
 
     }
 
-    public String getNumber() {
-        return super.getId();
+    public String getPrice() {
+        return price;
     }
 
-    public String getTime() {
-        return time;
+    public String getArea() {
+        return area;
     }
-
-    public String getDep() {
-        return department;
+    
+    public String getPurpose(){
+        return purpose;
     }
+   
 
     public String toString() {
         return super.toString();
